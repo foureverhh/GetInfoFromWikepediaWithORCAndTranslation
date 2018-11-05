@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GetInfoFromWikepediaWithORCAndTranslation</string>
+    <string name="intent_butten_default">Intent</string>
 </resources>

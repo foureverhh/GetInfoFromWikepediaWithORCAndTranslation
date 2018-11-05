@@ -1,11 +1,14 @@
 package com.example.zfgg04.getinfofromwikepediawithorcandtranslation;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView;
+    Button  intentButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         textView = findViewById(R.id.textView);
+        intentButton = findViewById(R.id.intent_button);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.raw.bank_china);
         imageView.setImageBitmap(bitmap);
@@ -107,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        intentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TranslateTextFromCamera.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
