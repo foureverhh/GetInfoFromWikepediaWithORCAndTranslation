@@ -5,10 +5,13 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.ByteArrayOutputStream;
 
 public class TranslateTextFromCamera extends AppCompatActivity {
 
@@ -41,6 +44,13 @@ public class TranslateTextFromCamera extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap picture = (Bitmap)extras.get("data");
             picturePreview.setImageBitmap(picture);
+
+            //Compress bitmap to Base64 so that Vision API can process it
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            picture.compress(Bitmap.CompressFormat.JPEG,90,byteStream);
+
+             //Get Base64 String
+            String base64Data = Base64.encodeToString(byteStream.toByteArray(),Base64.URL_SAFE);
 
         }
     }
