@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">GetInfoFromWikepediaWithORCAndTranslation</string>
-    <string name="intent_butten_default">Intent</string>
+    <string name="intent_button_default">Intent</string>
+    <string name="myKey">AIzaSyDVm55Q1b9VB5ZqG-Hfd2WlbTtUmcmkVh8</string>
+    <string name="btn_take_picture">Take a picture</string>
 </resources>
