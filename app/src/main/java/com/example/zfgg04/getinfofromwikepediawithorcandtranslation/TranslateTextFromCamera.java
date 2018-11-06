@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import kotlin.Pair;
 
@@ -34,7 +36,8 @@ public class TranslateTextFromCamera extends AppCompatActivity {
     ImageView picturePreview;
     TextView textResult;
     final static int REQUEST_IMAGE_CAPTURE = 1;
-
+    Button btnTranslateSwedish;
+    TextView translateText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +46,8 @@ public class TranslateTextFromCamera extends AppCompatActivity {
         btnPicture = findViewById(R.id.takePictureButton);
         picturePreview = findViewById(R.id.previewImage);
         textResult = findViewById(R.id.resultsText);
-
+        btnTranslateSwedish = findViewById(R.id.translate_btn);
+        translateText = findViewById(R.id.translatedText);
     }
 
     public void takePicture(View view){
@@ -145,9 +149,59 @@ public class TranslateTextFromCamera extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }
+    }
+
+    public void translateToSwedish(View view){
+        String requestURL =  "https://translation.googleapis.com/language/translate/v2";
+        List<Pair<String,String>> params = new ArrayList<>();
+// Add API key
+        params.add(new Pair<String,String>("key",
+                getResources().getString(R.string.myKey)));
+
+// Set source and target languages
+        params.add(new Pair<String,String>("source", "en"));
+        params.add(new Pair<String,String>("target", "sv"));
+
+        String[] queries = ((TextView)findViewById(R.id.resultsText))
+                .getText().toString().split("\n");
+
+        for(String query:queries) {
+            params.add(new Pair<String, String>("q", query));
+        }
+
+        Fuel.get(requestURL, params).responseString(new Handler<String>() {
+            @Override
+            public void success(@NotNull Request request,
+                                @NotNull Response response,
+                                String data) {
+                // Access the translations array
+
+                try {
+                JSONArray translations = new JSONObject(data)
+                            .getJSONObject("data")
+                            .getJSONArray("translations");
+                    // Loop through the array and extract the translatedText
+                    // key for each item
+                    String result = "";
+                    for(int i=0;i<translations.length();i++) {
+
+                        result += translations.getJSONObject(i)
+                                .getString("translatedText") + "\n";
+
+                    }
+                    textResult.setText(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failure(@NotNull Request request,
+                                @NotNull Response response,
+                                @NotNull FuelError fuelError) { }
+        });
     }
 }
 

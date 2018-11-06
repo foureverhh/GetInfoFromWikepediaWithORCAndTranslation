@@ -25,5 +25,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/resultsText"
         android:layout_below="@id/previewImage"/>
+    <Button
+        android:layout_marginTop="5dp"
+        android:id="@+id/translate_btn"
+        android:layout_below="@id/resultsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/translate_in_swedish"
+        android:onClick="translateToSwedish"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/translatedText"
+        android:layout_below="@id/translate_btn"/>
 
 </RelativeLayout>
